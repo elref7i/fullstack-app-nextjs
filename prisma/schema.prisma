@@ -39,8 +39,10 @@ model Project {
   description String?
   due         DateTime?
   deleted     Boolean   @default(false)
-
   tasks Task[]
+
+  @@unique([ownerId,name])
+  @@index([ownerId,id])
 }
 
 enum TASK_STATUS {
@@ -65,7 +67,4 @@ model Task {
 
   due DateTime?
   deleted Boolean @default(false)
-
-  @@unique([ownerId,name])
-  @@index([ownerId,id])
 }
