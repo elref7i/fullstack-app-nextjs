@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import GlassPane from "@/components/glass-pane";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -28,7 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <main className="h-screen w-screen p-6 rainbow-mesh bg-red-700">
+          <GlassPane className="h-full w-full flex justify-center items-center">
+            {children}
+          </GlassPane>
+        </main>
       </body>
     </html>
   );
