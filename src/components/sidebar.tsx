@@ -3,8 +3,8 @@
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
+  // CardDescription,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -12,7 +12,7 @@ import SidebarLink from "./sidebar-links";
 
 const links = [
   { label: "Home", icon: "Grid", link: "/home" },
-  { label: "Calendar", icon: "Calendar", link: "/calendar" },
+  { label: "Calendar", icon: "Calendar", link: "/Project" },
   { label: "Profile", icon: "User", link: "/profile" },
   { label: "Settings", icon: "Settings", link: "/settings" },
 ];
