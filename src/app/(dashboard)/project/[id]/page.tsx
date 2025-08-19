@@ -1,3 +1,3 @@
-export default function page({ params }: { params: string }) {
-  return <div>{params}</div>;
+export default function page({ params }: { params: { id: string } }) {
+  return <div>Project ID: {params.id}</div>;
 }
