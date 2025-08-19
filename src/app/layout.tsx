@@ -29,8 +29,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="h-screen w-screen p-6 rainbow-mesh bg-red-700">
-          <GlassPane className="h-full w-full flex justify-center items-center">
+        <main className="h-screen w-screen p-6 rainbow-mesh ">
+          <GlassPane className="-z-10 h-full w-full flex justify-center items-center">
             {children}
           </GlassPane>
         </main>
