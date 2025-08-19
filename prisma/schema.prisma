@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,16 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  email     String
-  firstName String
-  lastName  String
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
   password  String
+  firstName String?
+  lastName  String?
   projects  Project[]
-  tasks      Task[]
+  tasks     Task[]
 }
 
 model Project {
@@ -32,17 +27,17 @@ model Project {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name    String
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
 
+  name        String
   description String?
   due         DateTime?
+  tasks        Task[]
   deleted     Boolean   @default(false)
-  tasks Task[]
 
-  @@unique([ownerId,name])
-  @@index([ownerId,id])
+  @@unique([ownerId, name])
+  @@index([ownerId, id])
 }
 
 enum TASK_STATUS {
@@ -56,15 +51,18 @@ model Task {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  status TASK_STATUS @default(NOT_STARTED)
-  name   String
-
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id])
 
-  due DateTime?
-  deleted Boolean @default(false)
+  status      TASK_STATUS @default(NOT_STARTED)
+  name        String
+  description String?
+
+  due     DateTime?
+  deleted Boolean   @default(false)
+
+  @@index([ownerId])
 }
