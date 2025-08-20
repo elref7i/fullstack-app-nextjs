@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 interface FetcherType<TBody = unknown> {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -33,19 +35,31 @@ export const fetcher = async <TBody = unknown>({
 };
 
 export const register = async (user: RegisterForm) => {
-  return fetcher({
-    url: "/api/register",
-    method: "POST",
-    body: user,
-    json: false,
-  });
-};
+  try {
+    await fetcher({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/register`,
+      method: "POST",
+      body: user,
+      json: false,
+    });
+    toast.success("User registered successfully!");
+  } catch (error) {
+    console.error(error);
 
-export const siginin = async (user: SigninForm) => {
-  return fetcher({
-    url: "/api/siginin",
-    method: "POST",
-    body: user,
-    json: false,
-  });
+    toast.error("Something went wrong, please try again." + error);
+  }
+};
+export const signin = async (user: SigninForm) => {
+  try {
+    await fetcher({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/signin`,
+      method: "POST",
+      body: user,
+      json: false,
+    });
+    toast.success("Login successful ✅");
+  } catch (error) {
+    console.error(error);
+    toast.error("Login failed ❌");
+  }
 };

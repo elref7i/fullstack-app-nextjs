@@ -1,5 +1,5 @@
 "use client";
-import { register, siginin } from "@/lib/api/api";
+import { register, signin } from "@/lib/api/api";
 import { registerContent, signinContent } from "@/lib/utils/auth-content";
 import { useState } from "react";
 import {
@@ -26,7 +26,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
     if (mode === "register") {
       await register(formState);
     } else {
-      await siginin(formState);
+      await signin(formState);
     }
     setFormState(initial);
   };
