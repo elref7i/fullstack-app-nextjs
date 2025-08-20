@@ -12,10 +12,13 @@ import {
 import { Input } from "./ui/input";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 const initial = { email: "", password: "", firstName: "", lastName: "" };
 
 const AuthForm = ({ mode }: { mode: string }) => {
+  const router = useRouter();
+
   // Status
   const [formState, setFormState] = useState({ ...initial });
 
@@ -24,9 +27,9 @@ const AuthForm = ({ mode }: { mode: string }) => {
     e.preventDefault();
 
     if (mode === "register") {
-      await register(formState);
+      await register(formState, router);
     } else {
-      await signin(formState);
+      await signin(formState, router);
     }
     setFormState(initial);
   };

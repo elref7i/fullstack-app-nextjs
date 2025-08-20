@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 interface FetcherType<TBody = unknown> {
   url: string;
@@ -34,7 +35,10 @@ export const fetcher = async <TBody = unknown>({
   return {};
 };
 
-export const register = async (user: RegisterForm) => {
+export const register = async (
+  user: RegisterForm,
+  router: AppRouterInstance
+) => {
   try {
     await fetcher({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/register`,
@@ -43,13 +47,15 @@ export const register = async (user: RegisterForm) => {
       json: false,
     });
     toast.success("User registered successfully!");
+    router.push("/signin");
   } catch (error) {
     console.error(error);
 
     toast.error("Something went wrong, please try again." + error);
   }
 };
-export const signin = async (user: SigninForm) => {
+
+export const signin = async (user: SigninForm, router: AppRouterInstance) => {
   try {
     await fetcher({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/signin`,
@@ -58,6 +64,7 @@ export const signin = async (user: SigninForm) => {
       json: false,
     });
     toast.success("Login successful ✅");
+    router.push("/home");
   } catch (error) {
     console.error(error);
     toast.error("Login failed ❌");
