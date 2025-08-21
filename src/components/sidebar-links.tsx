@@ -28,12 +28,12 @@ const SidebarLink = ({ link }: SidebarLinksProps) => {
   return (
     <Link
       href={link.link}
-      className="w-full flex justify-center items-center"
+      className="w-ful"
     >
       <Icon
         size={30}
         className={clsx(
-          "stroke-gray-400 mb-3 hover:stroke-violet-600 transition duration-200 ease-in-out",
+          "stroke-gray-400 hover:stroke-violet-600 transition duration-200 ease-in-out",
           isActive && "stroke-violet-600"
         )}
       />

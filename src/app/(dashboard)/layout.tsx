@@ -2,7 +2,7 @@ import Sidebar from "@/components/sidebar";
 
 export default function DashboardLayout({ children }: LayoutProps) {
   return (
-    <div className="space-y-6 gap-3 flex w-full p-5">
+    <div className="space-y-6 gap-3 flex flex-col md:flex-row w-full items-center h-full p-5">
       <Sidebar />
       {children}
     </div>
