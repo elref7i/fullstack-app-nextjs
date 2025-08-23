@@ -6,7 +6,7 @@ import ProjectsComponents from "./_components/projects-components";
 
 export default function Page() {
   return (
-    <div className="w-full h-full overflow-y-auto pr-6">
+    <div className="w-full max-h-[80vh] py-5 overflow-y-auto pr-6">
       <div className=" h-full space-y-5 items-stretch justify-center min-h-[content]">
         <div className="flex-1 grow flex">
           <Suspense fallback={<GreetingsSkeleton />}>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import GlassPane from "@/components/glass-pane";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Providers from "@/components/providers";
+import { ToggleDemo } from "@/components/common/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,11 +18,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <main className="h-screen w-screen p-1 md:p-6 rainbow-mesh">
-          <GlassPane className="-z-10 h-full w-full flex justify-center items-center ">
-            {children}
-            <Toaster />
-          </GlassPane>
+        <main className="p-1 md:p-6 rainbow-mesh">
+          <Providers>
+            <GlassPane className="-z-10  w-full px-2 py-5">
+              <ToggleDemo />
+              <div className="flex justify-center items-center">{children}</div>
+              <Toaster />
+            </GlassPane>
+          </Providers>
         </main>
       </body>
     </html>
