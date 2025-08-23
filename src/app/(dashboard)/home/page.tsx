@@ -1,30 +1,29 @@
 import { Suspense } from "react";
 import Greetings from "./_components/greeting-component";
 import GreetingsSkeleton from "./_components/greeting-skeleton";
-import ProjectCard from "@/components/project-card";
+import TasksCard from "@/components/task-card";
+import ProjectsComponents from "./_components/projects-components";
 
 export default function Page() {
   return (
-    <div className="w-full h-full  overflow-y-auto pr-6">
-      <div className=" h-full items-stretch justify-center min-h-[content]">
+    <div className="w-full h-full overflow-y-auto pr-6">
+      <div className=" h-full space-y-5 items-stretch justify-center min-h-[content]">
         <div className="flex-1 grow flex">
           <Suspense fallback={<GreetingsSkeleton />}>
             <Greetings />
           </Suspense>
         </div>
+        {/* Projects */}
 
-        <div className="flex flex-2 grow items-center flex-wrap mt-3 -m-3 ">
-          {/* {projects.map((project) => (
-            <div className="w-1/3 p-3">
-              <Link href={`/project/${project.id}`}>
-                <ProjectCard project={project} />
-              </Link>
-            </div>
-          ))} */}
-          <div className="w-1/3 p-3">{/* <NewProject /> */}</div>
+        <div className="space-y-2">
+          <Suspense fallback={"...loading"}>
+            <ProjectsComponents />
+          </Suspense>
         </div>
-        <div className="mt-6 flex-2 grow w-full flex">
-          <div className="w-full">{/* <TasksCard /> */}</div>
+
+        {/* Tasks */}
+        <div className="w-full">
+          <TasksCard />
         </div>
       </div>
     </div>

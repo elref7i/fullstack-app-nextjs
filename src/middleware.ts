@@ -17,15 +17,12 @@ export default async function middleware(req: NextRequest) {
   const isPublicPage = publicPage.includes(pathname);
   const jwt = req.cookies.get(process.env.COOKIE_NAME!);
 
-  console.log("isPublicPage", isPublicPage);
-
   if (isPublicPage) {
     if (jwt) {
       req.nextUrl.pathname = "/home";
       return NextResponse.redirect(req.nextUrl);
     } else {
-      req.nextUrl.pathname = "/signin";
-      return NextResponse.redirect(req.nextUrl);
+      return NextResponse.next();
     }
   }
 
@@ -36,6 +33,7 @@ export default async function middleware(req: NextRequest) {
 
   try {
     await verifyJWT(jwt.value);
+
     return NextResponse.next();
   } catch (e) {
     console.error(e);
