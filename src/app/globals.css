@@ -90,9 +90,12 @@
   [data-nextjs-scroll-focus-boundary] {
     display: contents;
   }
+  
+
+  
 }
 
-.theme-mesh {
+.theme-dark {
   background-color: #0d1117;
   background-image: radial-gradient(
       at 40% 20%,
@@ -137,3 +140,4 @@
   backdrop-saturate: 180%;
   border: 1px solid rgba(59, 130, 246, 0.2);
 }
+

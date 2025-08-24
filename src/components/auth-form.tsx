@@ -13,11 +13,17 @@ import { Input } from "./ui/input";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 const initial = { email: "", password: "", firstName: "", lastName: "" };
 
 const AuthForm = ({ mode }: { mode: string }) => {
+  // Navigation
   const router = useRouter();
+
+  // Themes
+  const {theme} = useTheme();
 
   // Status
   const [formState, setFormState] = useState({ ...initial });
@@ -38,8 +44,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
   const content = mode === "register" ? registerContent : signinContent;
 
   return (
-    <Card className="shadow shadow-gray-200 ">
-      {/* Header */}
+<Card className={cn(theme === "dark" ? "glass-blue" : "", "shadow shadow-gray-200")}>      {/* Header */}
       <CardHeader>
         {/* Title */}
         <CardTitle>
@@ -50,7 +55,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
 
         {/* Description */}
         <CardDescription>
-          <p className="tex-lg text-black/25 text-center">
+          <p className="tex-lg text-grey-300 dark:text-grey-50 text-center">
             {content.subheader}
           </p>
         </CardDescription>
@@ -65,7 +70,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
           {mode === "register" && (
             <div className="flex flex-col md:flex-row justify-between gap-5 md:gap-2">
               <div className="space-y-2 flex-1">
-                <div className="text-lg ml-2 text-black/50">First Name</div>
+                <div className="text-lg ml-2">First Name</div>
                 <Input
                   required
                   placeholder="First Name"
@@ -77,7 +82,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
                 />
               </div>
               <div className="space-y-2 flex-1">
-                <div className="text-lg ml-2 text-black/50">Last Name</div>
+                <div className="text-lg ml-2">Last Name</div>
                 <Input
                   required
                   placeholder="Last Name"
@@ -91,7 +96,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
             </div>
           )}
           <div className="space-y-2">
-            <div className="text-lg ml-2 text-black/50">Email</div>
+            <div className="text-lg ml-2">Email</div>
             <Input
               required
               type="email"
@@ -104,7 +109,7 @@ const AuthForm = ({ mode }: { mode: string }) => {
             />
           </div>
           <div className="space-y-2">
-            <div className="text-lg ml-2 text-black/50">Password</div>
+            <div className="text-lg ml-2">Password</div>
             <Input
               required
               value={formState.password}

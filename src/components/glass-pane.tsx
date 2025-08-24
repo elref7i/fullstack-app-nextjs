@@ -16,7 +16,7 @@ const GlassPane = ({
   return (
     <div
       className={clsx(
-        theme === "light" ? "glass-blue " : "glass-clear",
+        theme === "light" ? "glass-blue" : "glass-clear",
         "rounded-2xl border-solid border-2 border-gray-200",
         className
       )}

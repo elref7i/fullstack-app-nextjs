@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <Providers>
-          <main className="p-2 sm:p-4 md:p-6 min-h-screen  theme-dark">
+          <main className="p-2 sm:p-4 md:p-6 min-h-screen glass-clear">
             <GlassPane className="w-full min-h-[80vh] px-3 py-3 sm:px-4 sm:py-4">
               <div className="flex min-h-[80vh] justify-center items-center">
                 {children}
