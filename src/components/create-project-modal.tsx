@@ -39,7 +39,7 @@ const NewProject = () => {
   };
 
   return (
-    <div className="px-6 py-8 ">
+    <div className="px-6 py-8">
       <Dialog
         open={isOpen}
         onOpenChange={setIsOpen}
