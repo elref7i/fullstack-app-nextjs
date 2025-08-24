@@ -46,9 +46,12 @@ export const fetcher = async <TBody = unknown>({
   const res = await fetch(url, {
     method,
     ...(body && { body: JSON.stringify(body) }),
+    credentials: 'include', // Important for cookies
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL || '*',
+      'Access-Control-Allow-Credentials': 'true',
     },
   });
 
