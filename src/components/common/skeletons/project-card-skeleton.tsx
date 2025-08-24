@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Skeleton } from "../skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProjectCardSkeleton = () => {
   return (

@@ -18,11 +18,10 @@ import {
 import { Plus } from "lucide-react";
 import { createNewPorject } from "@/lib/api/api";
 
-const NewProject = () => {
+const NewTask = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  // const [startDate, setStartDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,18 +49,18 @@ const NewProject = () => {
             className="bg-card hover:bg-accent hover:text-accent-foreground border-2 border-dashed border-border hover:border-accent transition-all duration-200 h-auto py-4 px-6 rounded-xl"
           >
             <Plus className="w-5 h-5 mr-2" />
-            New Project
+            Create Task
           </Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[600px] bg-background border border-border rounded-xl shadow-lg">
           <DialogHeader className="space-y-3">
             <DialogTitle className="text-2xl font-bold text-foreground">
-              Create New Project
+              Create New Task
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
-              Provide details for your new project. Fill in the information
-              below to get started.
+              Provide details for your new Task. Fill in the information below
+              to get started.
             </DialogDescription>
           </DialogHeader>
 
@@ -74,7 +73,7 @@ const NewProject = () => {
                 htmlFor="project-title"
                 className="text-sm font-medium text-foreground"
               >
-                Project Title *
+                Task Title *
               </Label>
               <Input
                 id="project-title"
@@ -91,7 +90,7 @@ const NewProject = () => {
                 htmlFor="project-description"
                 className="text-sm font-medium text-foreground"
               >
-                Project Description
+                Task Description
               </Label>
               <Textarea
                 id="project-description"
@@ -128,4 +127,4 @@ const NewProject = () => {
   );
 };
 
-export default NewProject;
+export default NewTask;

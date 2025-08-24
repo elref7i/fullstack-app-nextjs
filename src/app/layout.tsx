@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import GlassPane from "@/components/glass-pane";
+import GlassPane from "@/components/layout/glass-pane";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Providers from "@/components/providers";
@@ -18,10 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <main className="p-1 md:p-6 min-h-screen rainbow-mesh">
+        <main className="p-2 sm:p-4 md:p-6 min-h-screen rainbow-mesh">
           <Providers>
             <ToggleDemo />
-            <GlassPane className="w-ful min-h-[80vh] px-2 py-2">
+            <GlassPane className="w-full min-h-[80vh] px-3 py-3 sm:px-4 sm:py-4">
               <div className="flex min-h-[80vh] justify-center items-center">
                 {children}
               </div>

@@ -28,15 +28,18 @@ const SidebarLink = ({ link }: SidebarLinksProps) => {
   return (
     <Link
       href={link.link}
-      className="w-ful"
+      className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-accent/50 transition-colors"
     >
       <Icon
-        size={30}
+        size={24}
         className={clsx(
-          "stroke-gray-400  hover:stroke-violet-600 transition duration-200 ease-in-out",
-          isActive && "stroke-violet-600"
+          "transition-colors duration-200",
+          isActive
+            ? "text-primary stroke-primary"
+            : "text-muted-foreground hover:text-primary"
         )}
       />
+      <span className="text-xs font-medium hidden lg:block">{link.label}</span>
     </Link>
   );
 };

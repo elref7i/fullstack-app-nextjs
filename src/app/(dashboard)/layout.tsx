@@ -1,10 +1,10 @@
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/layout/sidebar/sidebar";
 
 export default function DashboardLayout({ children }: LayoutProps) {
   return (
-    <div className="space-y-6 gap-3 flex flex-col md:flex-row w-full  rounded-md p-5">
+    <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-6 rounded-md p-3 sm:p-4 lg:p-6">
       <Sidebar />
-      {children}
+      <main className="flex-1 min-w-0">{children}</main>
     </div>
   );
 }
