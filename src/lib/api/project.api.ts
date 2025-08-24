@@ -1,9 +1,29 @@
+/**
+ * Project API Functions
+ *
+ * This module provides database operations for projects and tasks.
+ * It includes cached versions for better performance and real-time updates.
+ *
+ * Features:
+ * - Cached data fetching with automatic revalidation
+ * - User-specific data filtering
+ * - Optimized database queries with Prisma
+ */
+
 import { TASK_STATUS } from "@prisma/client";
 import { db } from "../db";
 import { getData } from "./logged-user-api";
 import { unstable_cache } from "next/cache";
 
-// Cached version with revalidation
+/**
+ * Get User Projects (Cached)
+ *
+ * Retrieves all projects for a specific user with their associated tasks.
+ * Uses Next.js caching for improved performance.
+ *
+ * @param userId - The ID of the user whose projects to fetch
+ * @returns Promise with projects data including tasks
+ */
 export const getProjects = unstable_cache(
   async (userId: string) => {
     const projects = await db.project.findMany({
@@ -11,16 +31,16 @@ export const getProjects = unstable_cache(
         ownerId: userId,
       },
       include: {
-        tasks: true,
+        tasks: true, // Include related tasks for progress calculation
       },
     });
 
     return { projects };
   },
-  ["user-projects"],
+  ["user-projects"], // Cache key
   {
-    tags: ["projects"],
-    revalidate: false,
+    tags: ["projects"], // Cache tag for revalidation
+    revalidate: false, // Manual revalidation only
   }
 );
 

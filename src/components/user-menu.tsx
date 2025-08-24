@@ -1,3 +1,17 @@
+/**
+ * User Menu Component
+ *
+ * A dropdown menu component that displays user information and provides
+ * navigation options including profile, settings, and logout functionality.
+ *
+ * Features:
+ * - User avatar with initials
+ * - Dropdown menu with user info
+ * - Navigation to profile and settings
+ * - Logout functionality with loading state
+ * - Responsive design
+ */
+
 "use client";
 
 import { useState } from "react";
@@ -15,12 +29,15 @@ import { LogOut, User, Settings } from "lucide-react";
 import { logout } from "@/lib/api/api";
 import { useRouter } from "next/navigation";
 
+/**
+ * Props interface for the UserMenu component
+ */
 interface UserMenuProps {
   user?: {
     firstName?: string | null;
     lastName?: string | null;
     email: string;
-  };
+  } | null;
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
@@ -63,7 +80,7 @@ export default function UserMenu({ user }: UserMenuProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative size-10  flex items-center justify-center mx-auto bg-black rounded-full"
+          className="relative size-10 flex items-center justify-center mx-auto rounded-full"
         >
           <Avatar className="h-9 w-9">
             <AvatarFallback className="text-xs">{getInitials()}</AvatarFallback>

@@ -1,11 +1,24 @@
-// import Image from "next/image";
+/**
+ * Sidebar Navigation Component
+ *
+ * Responsive navigation sidebar that adapts to mobile and desktop layouts.
+ * Provides navigation links and user menu functionality.
+ *
+ * Features:
+ * - Mobile: Bottom navigation bar
+ * - Desktop: Vertical sidebar with logo
+ * - User menu integration
+ * - Responsive design
+ */
+
 import logo from "../../../../public/logo.png";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import SidebarLink from "./sidebar-links";
-import LogoutButton from "../../logout-button";
 import Image from "next/image";
 import UserMenu from "@/components/user-menu";
+import { getData } from "@/lib/api/logged-user-api";
 
+// Navigation links configuration
 const links = [
   { label: "Home", icon: "Grid", link: "/home" },
   { label: "Calendar", icon: "Calendar", link: "/project" },
@@ -13,7 +26,8 @@ const links = [
   { label: "Settings", icon: "Settings", link: "/settings" },
 ];
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const user = await getData();
   return (
     <Card className="bg-background/80 backdrop-blur-sm border-border/50 shadow-lg">
       {/* Mobile: Bottom navigation */}
@@ -25,7 +39,7 @@ const Sidebar = () => {
               link={link}
             />
           ))}
-          <UserMenu />
+          <UserMenu user={user || undefined} />
         </CardContent>
       </div>
 
@@ -56,7 +70,7 @@ const Sidebar = () => {
               size="icon"
               className="w-full h-10"
             /> */}
-            <UserMenu />
+            <UserMenu user={user || undefined} />
           </div>
         </CardContent>
       </div>

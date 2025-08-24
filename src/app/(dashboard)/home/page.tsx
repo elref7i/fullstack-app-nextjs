@@ -3,6 +3,8 @@ import Greetings from "./_components/greeting-component";
 import GreetingsSkeleton from "./_components/greeting-skeleton";
 import ProjectsComponents from "../../../components/projects-components";
 import Tasks from "@/components/tasks";
+import ProjectsSkeleton from "../project/_components/project-skeleton";
+import TasksSkeleton from "../tasks/_components/tasks-skeleton";
 
 export default function Page() {
   return (
@@ -17,14 +19,14 @@ export default function Page() {
 
         {/* Projects */}
         <div className="space-y-3">
-          <Suspense fallback={"...loading"}>
+          <Suspense fallback={<ProjectsSkeleton />}>
             <ProjectsComponents />
           </Suspense>
         </div>
 
         {/* Tasks */}
         <div className="w-full">
-          <Suspense fallback={"...loading"}>
+          <Suspense fallback={<TasksSkeleton />}>
             <Tasks />
           </Suspense>
         </div>
