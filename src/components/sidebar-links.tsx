@@ -33,7 +33,7 @@ const SidebarLink = ({ link }: SidebarLinksProps) => {
       <Icon
         size={30}
         className={clsx(
-          "stroke-gray-50  hover:stroke-violet-600 transition duration-200 ease-in-out",
+          "stroke-gray-400  hover:stroke-violet-600 transition duration-200 ease-in-out",
           isActive && "stroke-violet-600"
         )}
       />
