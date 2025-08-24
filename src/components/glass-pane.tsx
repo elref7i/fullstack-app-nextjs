@@ -1,5 +1,8 @@
+"use client";
+
 import { ReactNode } from "react";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
 
 const GlassPane = ({
   children,
@@ -8,10 +11,13 @@ const GlassPane = ({
   children: ReactNode;
   className: string;
 }) => {
+  // Theme
+  const { theme } = useTheme();
   return (
     <div
       className={clsx(
-        "glass rounded-2xl border-solid border-2 border-gray-200",
+        theme === "light" ? "glass-blue " : "glass-clear",
+        "rounded-2xl border-solid border-2 border-gray-200",
         className
       )}
     >

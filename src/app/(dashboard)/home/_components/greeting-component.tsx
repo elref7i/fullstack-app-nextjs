@@ -12,7 +12,8 @@ const Greetings = async () => {
     <div className="w-full p-4 sm:p-6 rounded-md relative bg-gradient-to-br from-primary/10 to-secondary/10 border border-border/50">
       <div className="mb-4 sm:mb-6">
         {/* Name User */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-foreground font-bold mb-2 sm:mb-4">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-black  
+        dark:text-white font-bold mb-2 sm:mb-4">
           Hello, {user?.firstName}!
         </h1>
 
