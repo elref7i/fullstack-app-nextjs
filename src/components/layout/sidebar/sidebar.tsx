@@ -1,16 +1,8 @@
 // import Image from "next/image";
 import logo from "../../../../public/logo.png";
-import {
-  Card,
-  CardContent,
-  // CardDescription,
-  // CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import SidebarLink from "./sidebar-links";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 const links = [
   { label: "Home", icon: "Grid", link: "/home" },
@@ -35,9 +27,9 @@ const Sidebar = () => {
       </div>
 
       {/* Desktop: Side navigation */}
-      <div className="hidden lg:flex lg:flex-col lg:w-16 lg:h-fit lg:sticky lg:top-4">
-        <CardHeader className="p-4 pb-2">
-          <CardTitle className="text-center">
+      <div className="hidden lg:flex lg:flex-col items-center lg:w-16 lg:h-fit lg:sticky lg:top-4">
+        <CardHeader className="pb-2  flex justify-center">
+          <CardTitle className="text-center ">
             <div className="relative w-10 h-10 rounded-md mx-auto">
               <Image
                 src={logo}

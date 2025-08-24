@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { revalidateTag } from "next/cache";
 
 interface FetcherType<TBody = unknown> {
   url: string;
@@ -87,6 +88,7 @@ export const createNewPorject = async (projectData: {
       json: true,
     });
     toast.success("successful ✅");
+    revalidateTag("projects");
   } catch (error) {
     console.error(error);
     toast.error("failed ❌");

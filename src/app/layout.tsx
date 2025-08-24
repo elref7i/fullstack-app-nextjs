@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import GlassPane from "@/components/layout/glass-pane";
+import GlassPane from "@/components/glass-pane";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Providers from "@/components/providers";

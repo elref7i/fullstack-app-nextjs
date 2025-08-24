@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getTasks } from "@/lib/api/project.api";
+import { getData } from "@/lib/api/logged-user-api";
 import { TASK_STATUS } from "@prisma/client";
 import { Circle, Plus } from "lucide-react";
 
@@ -24,7 +25,8 @@ interface TasksProps {
   title?: string;
 }
 export default async function Tasks({ tasks, title }: TasksProps) {
-  const data = tasks || (await getTasks());
+  const user = await getData();
+  const data = tasks || (await getTasks(user?.id || ""));
   return (
     <Card className="w-full mx-auto shadow-sm">
       <CardHeader className="pb-4">

@@ -1,42 +1,54 @@
 import { TASK_STATUS } from "@prisma/client";
 import { db } from "../db";
 import { getData } from "./logged-user-api";
+import { unstable_cache } from "next/cache";
 
-export const getProjects = async () => {
-  const user = await getData();
-
-  const projects = await db.project.findMany({
-    where: {
-      ownerId: user?.id,
-    },
-    include: {
-      tasks: true,
-    },
-  });
-
-  return { projects };
-};
-
-export const getTasks = async () => {
-  const user = await getData();
-
-  const tasks = await db.task.findMany({
-    where: {
-      ownerId: user?.id,
-      NOT: {
-        status: TASK_STATUS.COMPLETED,
-        deleted: false,
+// Cached version with revalidation
+export const getProjects = unstable_cache(
+  async (userId: string) => {
+    const projects = await db.project.findMany({
+      where: {
+        ownerId: userId,
       },
-    },
+      include: {
+        tasks: true,
+      },
+    });
 
-    take: 5,
-    orderBy: {
-      due: "asc",
-    },
-  });
+    return { projects };
+  },
+  ["user-projects"],
+  {
+    tags: ["projects"],
+    revalidate: false,
+  }
+);
 
-  return tasks;
-};
+// Cached version for tasks
+export const getTasks = unstable_cache(
+  async (userId: string) => {
+    const tasks = await db.task.findMany({
+      where: {
+        ownerId: userId,
+        NOT: {
+          status: TASK_STATUS.COMPLETED,
+          deleted: false,
+        },
+      },
+      take: 5,
+      orderBy: {
+        due: "asc",
+      },
+    });
+
+    return tasks;
+  },
+  ["user-tasks"],
+  {
+    tags: ["tasks"],
+    revalidate: false,
+  }
+);
 
 // Specific Project
 export const getSpecificProject = async (id: string) => {
