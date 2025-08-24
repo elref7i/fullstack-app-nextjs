@@ -80,7 +80,7 @@ export const register = async (
 ) => {
   try {
     await fetcher({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/register`,
+      url: `/api/register`,
       method: "POST",
       body: user,
       json: false,
@@ -104,7 +104,7 @@ export const register = async (
 export const signin = async (user: SigninForm, router: AppRouterInstance) => {
   try {
     await fetcher({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/signin`,
+      url: `/api/signin`,
       method: "POST",
       body: user,
       json: false,
@@ -130,7 +130,7 @@ export const createNewPorject = async (projectData: {
 }) => {
   try {
     await fetcher({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/project`,
+      url: `/api/project`,
       method: "POST",
       body: projectData,
       json: true,
@@ -154,7 +154,7 @@ export const createNewPorject = async (projectData: {
 export const logout = async (router: AppRouterInstance) => {
   try {
     await fetcher({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/logout`,
+      url: `/api/logout`,
       method: "POST",
       json: false,
     });
