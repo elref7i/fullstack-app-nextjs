@@ -94,3 +94,19 @@ export const createNewPorject = async (projectData: {
     toast.error("failed ❌");
   }
 };
+
+// Logout
+export const logout = async (router: AppRouterInstance) => {
+  try {
+    await fetcher({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/logout`,
+      method: "POST",
+      json: false,
+    });
+    toast.success("Logged out successfully");
+    router.push("/signin");
+  } catch (error) {
+    console.error(error);
+    toast.error("Logout failed");
+  }
+};

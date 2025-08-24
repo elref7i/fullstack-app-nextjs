@@ -2,7 +2,9 @@
 import logo from "../../../../public/logo.png";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import SidebarLink from "./sidebar-links";
+import LogoutButton from "../../logout-button";
 import Image from "next/image";
+import UserMenu from "@/components/user-menu";
 
 const links = [
   { label: "Home", icon: "Grid", link: "/home" },
@@ -23,6 +25,7 @@ const Sidebar = () => {
               link={link}
             />
           ))}
+          <UserMenu />
         </CardContent>
       </div>
 
@@ -47,6 +50,14 @@ const Sidebar = () => {
               link={link}
             />
           ))}
+          <div className="pt-4 border-t border-border/50">
+            {/* <LogoutButton
+              variant="ghost"
+              size="icon"
+              className="w-full h-10"
+            /> */}
+            <UserMenu />
+          </div>
         </CardContent>
       </div>
     </Card>
