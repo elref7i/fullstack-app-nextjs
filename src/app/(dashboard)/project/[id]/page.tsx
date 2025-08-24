@@ -1,3 +1,25 @@
-export default function page({ params }: { params: string }) {
-  return <div>{params}</div>;
+import TasksCard from "@/components/task-card";
+import { getSpecificProject } from "@/lib/api/project.api";
+import { Suspense } from "react";
+
+export default async function page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const project = await getSpecificProject(id);
+
+  return (
+    <div className="h-full overflow-y-auto pr-6 w-1/1">
+      <Suspense fallback={"...loading"}>
+        {project && (
+          <TasksCard
+            tasks={project.tasks}
+            title={project.name}
+          />
+        )}
+      </Suspense>
+    </div>
+  );
 }

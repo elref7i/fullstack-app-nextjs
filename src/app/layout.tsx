@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import GlassPane from "@/components/glass-pane";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { Toaster } from "sonner";
+import Providers from "@/components/providers";
+import { ToggleDemo } from "@/components/common/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,13 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <main className="h-screen w-screen p-6 rainbow-mesh bg-red-700">
-          <GlassPane className="h-full w-full flex justify-center items-center">
-            {children}
-          </GlassPane>
+      <body className={`antialiased`}>
+        <main className="p-1 md:p-6 min-h-screen rainbow-mesh">
+          <Providers>
+            <ToggleDemo />
+            <GlassPane className="w-ful min-h-[80vh] px-2 py-2">
+              <div className="flex min-h-[80vh] justify-center items-center">
+                {children}
+              </div>
+              <Toaster />
+            </GlassPane>
+          </Providers>
         </main>
       </body>
     </html>
