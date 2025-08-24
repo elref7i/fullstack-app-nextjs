@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import Greetings from "./_components/greeting-component";
 import GreetingsSkeleton from "./_components/greeting-skeleton";
-import TasksCard from "@/components/task-card";
 import ProjectsComponents from "./_components/projects-components";
 
 export default function Page() {
@@ -19,11 +18,6 @@ export default function Page() {
           <Suspense fallback={"...loading"}>
             <ProjectsComponents />
           </Suspense>
-        </div>
-
-        {/* Tasks */}
-        <div className="w-full">
-          <TasksCard />
         </div>
       </div>
     </div>

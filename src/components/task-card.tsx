@@ -7,8 +7,26 @@ import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
 import { TASK_STATUS } from "@prisma/client";
 
-export default async function TasksCard() {
-  const data = await getTasks();
+interface Task {
+  id: string;
+  name: string;
+  description: string | null;
+  status: TASK_STATUS;
+  due: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  ownerId: string;
+  projectId: string;
+  deleted: boolean;
+}
+
+interface TasksCardProps {
+  tasks?: Task[];
+  title?: string;
+}
+
+export default async function TasksCard({ tasks, title }: TasksCardProps) {
+  const data = tasks || (await getTasks());
 
   const getStatusConfig = (status: TASK_STATUS) => {
     switch (status) {
@@ -38,7 +56,7 @@ export default async function TasksCard() {
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <CardTitle className="text-2xl font-semibold text-foreground">
-            My Tasks
+            {title || "All Tasks"}
           </CardTitle>
           <Button className="gap-2 hover:scale-105 transition-transform">
             <Plus className="h-4 w-4" />

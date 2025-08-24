@@ -1,31 +1,43 @@
+import NewProject from "@/components/create-project-modal";
 import ProjectCard from "@/components/project-card";
-import { Button } from "@/components/ui/button";
+import TasksCard from "@/components/task-card";
+
 import { getProjects } from "@/lib/api/project.api";
-import { Plus } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default async function ProjectsComponents() {
   const { projects } = await getProjects();
+  console.log(projects);
+
   return (
     <>
-      <div className="flex flex-2 grow items-center flex-wrap mt-3 -m-3 ">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="w-1/3 p-3"
-          >
-            <Link href={`/project/${project.id}`}>
-              <ProjectCard project={project} />
-            </Link>
-          </div>
-        ))}
+      <div className="space-y-2">
+        <div className="flex flex-2 grow items-center flex-wrap mt-3 -m-3 ">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="w-1/3 p-3"
+            >
+              <Link href={`/project/${project.id}`}>
+                <ProjectCard project={project} />
+              </Link>
+            </div>
+          ))}
+        </div>
+        {/* Add new */}
+        <NewProject />
+        {/* <Button>
+          <Plus />
+          Add new Project
+        </Button> */}
       </div>
-      {/* Add new */}
-      <Button>
-        <Plus />
-        Add new Project
-      </Button>
+      {/* Tasks */}
+      <div className="w-full">
+        <Suspense fallback={"...loading"}>
+          <TasksCard />
+        </Suspense>
+      </div>
     </>
   );
 }

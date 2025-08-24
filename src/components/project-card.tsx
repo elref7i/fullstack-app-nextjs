@@ -79,6 +79,8 @@ const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
           </div>
         </div>
 
+        {/* Test */}
+        {/* 
         {totalTasks > 0 && (
           <div className="flex items-center gap-4 pt-2 border-t border-border">
             <div className="flex items-center gap-1 text-xs">
@@ -94,7 +96,7 @@ const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
               </span>
             </div>
           </div>
-        )}
+        )} */}
       </CardContent>
     </Card>
   );

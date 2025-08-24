@@ -8,6 +8,7 @@ interface FetcherType<TBody = unknown> {
   json?: boolean;
 }
 
+// Fetcher
 export const fetcher = async <TBody = unknown>({
   url,
   method,
@@ -35,6 +36,7 @@ export const fetcher = async <TBody = unknown>({
   return {};
 };
 
+//  Register
 export const register = async (
   user: RegisterForm,
   router: AppRouterInstance
@@ -55,6 +57,7 @@ export const register = async (
   }
 };
 
+// Sign in
 export const signin = async (user: SigninForm, router: AppRouterInstance) => {
   try {
     await fetcher({
@@ -68,5 +71,24 @@ export const signin = async (user: SigninForm, router: AppRouterInstance) => {
   } catch (error) {
     console.error(error);
     toast.error("Login failed ❌");
+  }
+};
+
+//  Create New Project
+export const createNewPorject = async (projectData: {
+  name: string;
+  description?: string;
+}) => {
+  try {
+    await fetcher({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/project`,
+      method: "POST",
+      body: projectData,
+      json: true,
+    });
+    toast.success("successful ✅");
+  } catch (error) {
+    console.error(error);
+    toast.error("failed ❌");
   }
 };

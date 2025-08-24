@@ -18,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <main className="p-1 md:p-6 rainbow-mesh">
+        <main className="p-1 md:p-6 min-h-screen  rainbow-mesh">
           <Providers>
-            <GlassPane className="-z-10  w-full px-2 py-5">
-              <ToggleDemo />
-              <div className="flex justify-center items-center">{children}</div>
+            <ToggleDemo />
+            <GlassPane className="w-ful h-full px-2 py-2">
+              <div className="flex w-full h-full justify-center items-center">
+                {children}
+              </div>
               <Toaster />
             </GlassPane>
           </Providers>
