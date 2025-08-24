@@ -1,13 +1,5 @@
-import TasksCard from "@/components/task-card";
-import React, { Suspense } from "react";
-import TasksSkeleton from "./_components/tasks-skeleton";
+import Tasks from "@/components/tasks";
 
 export default function Page() {
-  return (
-    <div className="w-full">
-      <Suspense fallback={<TasksSkeleton />}>
-        <TasksCard />
-      </Suspense>
-    </div>
-  );
+  return <Tasks />;
 }

@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { validateJWT } from "@/lib/utils/auth-bcrypt";
-
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -21,6 +21,9 @@ export async function POST(req: NextRequest) {
         ownerId: user.id,
       },
     });
+
+    // Revalidate the projects cache
+    revalidateTag("projects");
 
     return NextResponse.json({
       data: { message: "Project created successfully" },

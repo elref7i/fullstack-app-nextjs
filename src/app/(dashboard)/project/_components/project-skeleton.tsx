@@ -2,11 +2,11 @@ import ProjectCardSkeleton from "@/components/common/skeletons/project-card-skel
 
 export default function ProjectsSkeleton() {
   return (
-    <div className="flex flex-2 grow items-center min-h-[80vh] flex-wrap mt-3 -m-3">
-      {Array.from({ length: 6 }).map((_, index) => (
+    <div className="flex  grow items-center  flex-wrap">
+      {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={index}
-          className="w-1/3 p-3"
+          className="w-1/4 p-3"
         >
           <ProjectCardSkeleton />
         </div>

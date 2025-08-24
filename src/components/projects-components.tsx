@@ -1,26 +1,31 @@
 import ProjectCard from "@/components/project-card";
-
 import { getProjects } from "@/lib/api/project.api";
+import { getData } from "@/lib/api/logged-user-api";
 import Link from "next/link";
 
 export default async function ProjectsComponents() {
-  const { projects } = await getProjects();
+  const user = await getData();
+  const { projects } = await getProjects(user?.id || "");
   console.log(projects);
 
   return (
-    <>
-      <div className="flex flex-2 grow items-center flex-wrap mt-3 -m-3">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+          Projects
+        </h2>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {projects.map((project) => (
-          <div
+          <Link
             key={project.id}
-            className="w-1/3 p-3"
+            href={`/project/${project.id}`}
+            className="block"
           >
-            <Link href={`/project/${project.id}`}>
-              <ProjectCard project={project} />
-            </Link>
-          </div>
+            <ProjectCard project={project} />
+          </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }

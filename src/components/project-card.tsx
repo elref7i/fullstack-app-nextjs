@@ -28,29 +28,29 @@ const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
     totalTasks > 0 ? Math.round((completedCount / totalTasks) * 100) : 0;
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border">
+    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border h-full">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Calendar className="h-4 w-4" />
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+            <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>{formatDate(project.createdAt)}</span>
           </div>
           <Badge
             variant="secondary"
-            className="bg-secondary/20 text-secondary-foreground"
+            className="bg-secondary/20 text-secondary-foreground text-xs"
           >
             {totalTasks} {totalTasks === 1 ? "task" : "tasks"}
           </Badge>
         </div>
-        <h3 className="text-xl font-semibold text-card-foreground group-hover:text-primary transition-colors">
+        <h3 className="text-lg sm:text-xl font-semibold text-card-foreground group-hover:text-primary transition-colors line-clamp-2">
           {project.name}
         </h3>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-xs sm:text-sm">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-primary" />
+            <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
             <span className="text-muted-foreground">
               <span className="font-medium text-card-foreground">
                 {completedCount}
@@ -63,7 +63,7 @@ const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <Circle className="h-3 w-3 text-chart-1" />
+            <Circle className="h-2 w-2 sm:h-3 sm:w-3 text-chart-1" />
             <span className="font-semibold text-primary">{progress}%</span>
           </div>
         </div>

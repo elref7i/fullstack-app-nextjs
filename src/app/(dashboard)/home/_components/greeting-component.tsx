@@ -9,29 +9,34 @@ const Greetings = async () => {
   const user = await getData();
 
   return (
-    <div className="w-full -z-10  p-6 rounded-md relative bg-gray-300">
-      <div className="mb-4">
+    <div className="w-full p-4 sm:p-6 rounded-md relative bg-gradient-to-br from-primary/10 to-secondary/10 border border-border/50">
+      <div className="mb-4 sm:mb-6">
         {/* Name User */}
-        <h1 className="text-3xl text-gray-700 font-bold mb-4">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-foreground font-bold mb-2 sm:mb-4">
           Hello, {user?.firstName}!
         </h1>
 
         {/* Description  */}
-        <h4 className="text-xl text-gray-400">
+        <h4 className="text-base sm:text-xl text-muted-foreground">
           Check your daily tasks and schedule
         </h4>
       </div>
 
       {/* Button */}
       <div>
-        <Button size="lg">Today&apos;s Schedule</Button>
+        <Button
+          size="lg"
+          className="w-full sm:w-auto"
+        >
+          Today&apos;s Schedule
+        </Button>
       </div>
 
       {/* Image */}
       <Image
         src={img}
         alt="busy person on computer"
-        className="w-1/4 -z-10 absolute hidden sm:block top-[0px] lg:top-[-30px] right-0"
+        className="w-1/3 sm:w-1/4 absolute hidden sm:block top-0 right-0 opacity-80"
       />
     </div>
   );
