@@ -2,13 +2,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { Calendar, Grid, Settings, User, LucideIcon } from "lucide-react";
+import {
+  Grid,
+  LucideIcon,
+  SquareDashedKanban,
+  ClipboardList,
+} from "lucide-react";
 
 const icons: Record<string, LucideIcon> = {
   Grid,
-  Calendar,
-  User,
-  Settings,
+  SquareDashedKanban,
+  ClipboardList,
 };
 
 interface SidebarLinksProps {
@@ -22,7 +26,6 @@ interface SidebarLinksProps {
 const SidebarLink = ({ link }: SidebarLinksProps) => {
   const pathname = usePathname();
   const isActive = pathname === link.link;
-
   const Icon = icons[link.icon];
 
   return (

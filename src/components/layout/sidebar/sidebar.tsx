@@ -21,9 +21,8 @@ import { getData } from "@/lib/api/logged-user-api";
 // Navigation links configuration
 const links = [
   { label: "Home", icon: "Grid", link: "/home" },
-  { label: "Calendar", icon: "Calendar", link: "/project" },
-  { label: "Profile", icon: "User", link: "/tasks" },
-  { label: "Settings", icon: "Settings", link: "/settings" },
+  { label: "Project", icon: "SquareDashedKanban", link: "/project" },
+  { label: "Tasks", icon: "ClipboardList", link: "/tasks" },
 ];
 
 const Sidebar = async () => {

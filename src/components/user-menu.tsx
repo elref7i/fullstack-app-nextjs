@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User, Settings } from "lucide-react";
 import { logout } from "@/lib/api/api";
 import { useRouter } from "next/navigation";
+import { ToggleDemo } from "./common/theme-toggle";
 
 /**
  * Props interface for the UserMenu component
@@ -87,6 +88,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent
         className="w-56"
         align="end"
@@ -102,16 +104,21 @@ export default function UserMenu({ user }: UserMenuProps) {
             </p>
           </div>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem onClick={() => router.push("/tasks")}>
           <User className="mr-2 h-5 w-5" />
           <span>Profile</span>
         </DropdownMenuItem>
+
         <DropdownMenuItem onClick={() => router.push("/settings")}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem
           onClick={handleLogout}
           disabled={isLoading}
@@ -120,6 +127,12 @@ export default function UserMenu({ user }: UserMenuProps) {
           <LogOut className="mr-2 h-4 w-4" />
           <span>{isLoading ? "Logging out..." : "Logout"}</span>
         </DropdownMenuItem>
+
+        <DropdownMenuItem className="w-fit mx-auto">
+          <ToggleDemo />
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
       </DropdownMenuContent>
     </DropdownMenu>
   );

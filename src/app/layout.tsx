@@ -16,7 +16,6 @@ import GlassPane from "@/components/glass-pane";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Providers from "@/components/providers";
-import { ToggleDemo } from "@/components/common/theme-toggle";
 
 // Application metadata for SEO and browser
 export const metadata: Metadata = {
@@ -32,17 +31,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <main className="p-2 sm:p-4 md:p-6 min-h-screen rainbow-mesh">
-          <Providers>
-            <ToggleDemo />
+        <Providers>
+          <main className="p-2 sm:p-4 md:p-6 min-h-screen glass-clear">
             <GlassPane className="w-full min-h-[80vh] px-3 py-3 sm:px-4 sm:py-4">
               <div className="flex min-h-[80vh] justify-center items-center">
                 {children}
               </div>
               <Toaster />
             </GlassPane>
-          </Providers>
-        </main>
+          </main>
+        </Providers>
       </body>
     </html>
   );
