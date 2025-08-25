@@ -7,11 +7,21 @@ export async function POST() {
       { status: 200 }
     );
 
-    // Clear the authentication cookie
     response.cookies.delete(process.env.COOKIE_NAME!);
 
     return response;
   } catch {
     return NextResponse.json({ error: "Failed to logout" }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }

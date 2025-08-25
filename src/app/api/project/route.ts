@@ -1,3 +1,4 @@
+// app/api/projects/route.ts (or wherever this file is)
 import { db } from "@/lib/db";
 import { validateJWT } from "@/lib/utils/auth-bcrypt";
 import { revalidateTag } from "next/cache";
@@ -22,7 +23,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Revalidate the projects cache
     revalidateTag("projects");
 
     return NextResponse.json({
@@ -46,4 +46,15 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
