@@ -36,34 +36,39 @@ interface FetcherType<TBody = unknown> {
  * @returns Promise with the response data
  * @throws Error if the request fails
  */
-export const fetcher = async <TBody = unknown>({
+export const fetcher = async <TBody = unknown, TResponse = unknown>({
   url,
   method,
   body,
   json = true,
-}: FetcherType<TBody>): Promise<unknown> => {
+}: FetcherType<TBody>): Promise<TResponse> => {
   // Make the HTTP request
   const res = await fetch(url, {
     method,
     ...(body && { body: JSON.stringify(body) }),
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
+    credentials: 'include',
   });
 
   // Handle HTTP errors
   if (!res.ok) {
-    throw new Error("API error");
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'API request failed');
   }
 
   // Parse JSON response if requested
   if (json) {
-    const payload = await res.json();
-    return payload.data; // Return data property for consistency
+    const data = await res.json();
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    return data;
   }
 
-  return {};
+  return null as unknown as TResponse;
 };
 
 /**
@@ -79,17 +84,20 @@ export const register = async (
   router: AppRouterInstance
 ) => {
   try {
-    await fetcher({
+    const response = await fetcher<RegisterForm, { success: boolean; message: string }>({
       url: `/api/register`,
       method: "POST",
       body: user,
-      json: false,
+      json: true,
     });
-    toast.success("User registered successfully!");
-    router.push("/signin");
+    
+    if (response.success) {
+      toast.success(response.message || "Registration successful!");
+      router.push("/signin");
+    }
   } catch (error) {
-    console.error(error);
-    toast.error("Something went wrong, please try again." + error);
+    console.error("Registration error:", error);
+    toast.error(error instanceof Error ? error.message : "Registration failed. Please try again.");
   }
 };
 
@@ -103,17 +111,21 @@ export const register = async (
  */
 export const signin = async (user: SigninForm, router: AppRouterInstance) => {
   try {
-    await fetcher({
+    const response = await fetcher<SigninForm, { success: boolean; message: string }>({
       url: `/api/signin`,
       method: "POST",
       body: user,
-      json: false,
+      json: true,
     });
-    toast.success("Login successful ✅");
-    router.push("/home");
+    
+    if (response.success) {
+      toast.success(response.message || "Login successful ✅");
+      router.push("/home");
+      router.refresh();
+    }
   } catch (error) {
-    console.error(error);
-    toast.error("Login failed ❌");
+    console.error("Signin error:", error);
+    toast.error(error instanceof Error ? error.message : "Login failed. Please try again.");
   }
 };
 
