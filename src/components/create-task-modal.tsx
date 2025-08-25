@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import { createNewPorject } from "@/lib/api/api";
+import { createNewProject } from "@/lib/api/api";
 
 const NewTask = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const NewTask = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await createNewPorject({ name, description });
+      await createNewProject({ name, description });
       setIsOpen(false);
     } catch (error) {
       console.error(error);
