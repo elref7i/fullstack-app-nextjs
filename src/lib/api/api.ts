@@ -55,8 +55,18 @@ export const fetcher = async <TBody = unknown, TResponse = unknown>({
 
   // Handle HTTP errors
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.error || 'API request failed');
+    let errorMessage = `API request failed with status ${res.status}`;
+    try {
+      const errorData = await res.json();
+      if (errorData && typeof errorData === 'object') {
+        errorMessage = errorData.error || errorData.message || JSON.stringify(errorData);
+      }
+    } catch (e) {
+      // If we can't parse JSON, try to get text instead
+      const text = await res.text().catch(() => '');
+      errorMessage = text || `API request failed with status ${res.status}`;
+    }
+    throw new Error(errorMessage);
   }
 
   // Parse JSON response if requested
