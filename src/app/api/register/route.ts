@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { createJWT, hashPassword } from "@/lib/utils/auth-bcrypt";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
