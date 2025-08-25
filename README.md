@@ -1,3 +1,28 @@
+## Deployment (Vercel)
+
+Required environment variables (.env / Vercel → Project Settings):
+
+```
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB?sslmode=require
+JWT_SECRET=your-long-random-secret
+COOKIE_NAME=token
+NEXT_PUBLIC_APP_URL=https://your-vercel-domain.vercel.app
+```
+
+Notes:
+
+- Ensure your Postgres is reachable from Vercel (Neon/Supabase/Railway).
+- Vercel Build Command uses `vercel-build` which runs `prisma generate && next build`.
+- Run migrations in Vercel (post-deploy via shell or locally): `npx prisma migrate deploy`.
+
+On Vercel:
+
+1. Import the repo.
+2. Set the env vars above in Project Settings → Environment Variables.
+3. Set Build Command: `prisma generate && next build` (or use the default and define `VERCEL` hook to run prisma generate).
+4. Optional Install Command: `yarn install`.
+5. Redeploy.
+
 # Fullstack Next.js Project Management App
 
 A modern, responsive project management application built with Next.js 15, TypeScript, Prisma, and Tailwind CSS.
