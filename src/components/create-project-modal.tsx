@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import { createNewPorject } from "@/lib/api/api";
+import { createNewProject } from "@/lib/api/api";
 import { useRouter } from "next/navigation";
 
 const NewProject = () => {
@@ -31,7 +31,7 @@ const NewProject = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await createNewPorject({ name, description });
+      await createNewProject({ name, description });
       setIsOpen(false);
       // Reset form
       setName("");
