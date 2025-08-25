@@ -2,14 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { comparePasswords, createJWT } from "@/lib/utils/auth-bcrypt";
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
 export async function POST(request: NextRequest) {
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, {
+      status: 204,
+      headers: corsHeaders,
+    });
+  }
   try {
     const body = await request.json();
 
     if (!body.email || !body.password) {
       return NextResponse.json(
         { error: "Email and password required" },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: corsHeaders
+        }
       );
     }
 
@@ -20,7 +35,10 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json(
         { error: "Invalid email or password" },
-        { status: 401 }
+        { 
+          status: 401,
+          headers: corsHeaders
+        }
       );
     }
 
@@ -32,11 +50,19 @@ export async function POST(request: NextRequest) {
     if (!isValidPassword) {
       return NextResponse.json(
         { error: "Invalid email or password" },
-        { status: 401 }
+        { 
+          status: 401,
+          headers: corsHeaders
+        }
       );
     }
 
     const jwt = await createJWT({ id: user.id, email: user.email });
+
+    const responseHeaders = {
+      ...corsHeaders,
+      'Set-Cookie': `token=${jwt}; Path=/; HttpOnly; SameSite=Lax`,
+    };
 
     const response = NextResponse.json(
       {
@@ -49,18 +75,11 @@ export async function POST(request: NextRequest) {
           lastName: user.lastName,
         },
       },
-      { status: 200 }
+      {
+        status: 200,
+        headers: responseHeaders,
+      }
     );
-
-    response.cookies.set({
-      name: process.env.COOKIE_NAME!,
-      value: jwt,
-      httpOnly: true,
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-    });
 
     return response;
   } catch (error) {
@@ -69,11 +88,7 @@ export async function POST(request: NextRequest) {
 }
 export async function OPTIONS() {
   return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    },
+    status: 204,
+    headers: corsHeaders,
   });
 }
