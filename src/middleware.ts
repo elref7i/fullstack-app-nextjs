@@ -16,13 +16,11 @@ const verifyJWT = async (jwt: string) => {
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ✅ تأكد إن الـ API routes مش بتمر عبر الـ middleware
   if (pathname.startsWith("/api/")) {
     console.log("API route detected, skipping middleware:", pathname);
     return NextResponse.next();
   }
 
-  // ✅ تأكد إن الـ static files مش بتمر عبر الـ middleware
   if (
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/favicon") ||
@@ -96,9 +94,7 @@ export default async function middleware(req: NextRequest) {
   }
 }
 
-// ✅ الحل الأهم: تحديث الـ matcher
 export const config = {
-  // استثناء API routes و static files و Next.js internals
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
