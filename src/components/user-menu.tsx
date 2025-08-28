@@ -107,7 +107,7 @@ export default function UserMenu({ user }: UserMenuProps) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => router.push("/tasks")}>
+        <DropdownMenuItem onClick={() => router.push("/profile")}>
           <User className="mr-2 h-5 w-5" />
           <span>Profile</span>
         </DropdownMenuItem>

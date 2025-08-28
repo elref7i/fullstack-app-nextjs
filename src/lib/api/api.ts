@@ -15,119 +15,7 @@
 import { toast } from "sonner";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { revalidateTag } from "next/cache";
-
-// Type definitions
-export interface RegisterForm {
-  email: string;
-  password: string;
-  name?: string;
-  confirmPassword?: string;
-}
-
-export interface SigninForm {
-  email: string;
-  password: string;
-}
-
-export interface ProjectData {
-  name: string;
-  description?: string;
-}
-
-export interface APIResponse<T = unknown> {
-  data?: T;
-  message?: string;
-  error?: string;
-}
-
-/**
- * Configuration interface for the fetcher function
- * @template TBody - Type of the request body
- */
-interface FetcherType<TBody = unknown> {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-  body?: TBody;
-  json?: boolean;
-}
-
-/**
- * Custom API Error class for better error handling
- */
-export class APIError extends Error {
-  constructor(
-    message: string,
-    public status: number,
-    public response?: APIResponse
-  ) {
-    super(message);
-    this.name = "APIError";
-  }
-}
-
-/**
- * Universal API fetcher function
- *
- * Handles all HTTP requests to the API with consistent error handling
- * and response processing.
- *
- * @param config - Configuration object for the request
- * @returns Promise with the response data
- * @throws APIError if the request fails
- */
-export const fetcher = async <TBody = unknown, TResponse = unknown>({
-  url,
-  method,
-  body,
-  json = true,
-}: FetcherType<TBody>): Promise<TResponse> => {
-  try {
-    // Make the HTTP request
-    const res = await fetch(url, {
-      method,
-      ...(body && { body: JSON.stringify(body) }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
-    // Parse response
-    let responseData: APIResponse<TResponse> = {};
-    try {
-      responseData = await res.json();
-    } catch {
-      // Handle non-JSON responses
-      responseData = { message: "Invalid response format" };
-    }
-
-    // Handle HTTP errors with more specific messaging
-    if (!res.ok) {
-      const errorMessage = responseData.error || 
-                          responseData.message || 
-                          `HTTP ${res.status}: ${res.statusText}`;
-      throw new APIError(errorMessage, res.status, responseData);
-    }
-
-    // Return appropriate data based on json flag
-    if (json && responseData.data !== undefined) {
-      return responseData.data;
-    }
-    
-    return (json ? responseData : {}) as TResponse;
-  } catch (error) {
-    // Re-throw APIErrors as-is
-    if (error instanceof APIError) {
-      throw error;
-    }
-    
-    // Handle network errors or other fetch failures
-    throw new APIError(
-      error instanceof Error ? error.message : "Network error occurred",
-      0
-    );
-  }
-};
+import { fetcher } from "../utils/fetcher-data";
 
 /**
  * User Registration
@@ -148,12 +36,12 @@ export const register = async (
       body: user,
       json: false,
     });
-    
+
     toast.success("Account created successfully! Please sign in.");
     router.push("/signin");
   } catch (error) {
     console.error("Registration failed:", error);
-    
+
     if (error instanceof APIError) {
       toast.error(`Registration failed: ${error.message}`);
     } else {
@@ -171,7 +59,7 @@ export const register = async (
  * @param router - Next.js router instance for navigation
  */
 export const signin = async (
-  user: SigninForm, 
+  user: SigninForm,
   router: AppRouterInstance
 ): Promise<void> => {
   try {
@@ -181,12 +69,12 @@ export const signin = async (
       body: user,
       json: false,
     });
-    
+
     toast.success("Welcome back! ✅");
     router.push("/home");
   } catch (error) {
     console.error("Sign in failed:", error);
-    
+
     if (error instanceof APIError) {
       // Handle specific error cases
       if (error.status === 401) {
@@ -219,12 +107,12 @@ export const createNewProject = async (
       body: projectData,
       json: true,
     });
-    
+
     toast.success(`Project "${projectData.name}" created successfully! ✅`);
     revalidateTag("projects"); // Refresh cached project data
   } catch (error) {
     console.error("Project creation failed:", error);
-    
+
     if (error instanceof APIError) {
       if (error.status === 409) {
         toast.error("A project with this name already exists");
@@ -258,12 +146,12 @@ export const updateProject = async (
       body: projectData,
       json: true,
     });
-    
+
     toast.success("Project updated successfully! ✅");
     revalidateTag("projects");
   } catch (error) {
     console.error("Project update failed:", error);
-    
+
     if (error instanceof APIError) {
       toast.error(`Failed to update project: ${error.message}`);
     } else {
@@ -286,12 +174,12 @@ export const deleteProject = async (projectId: string): Promise<void> => {
       method: "DELETE",
       json: false,
     });
-    
+
     toast.success("Project deleted successfully");
     revalidateTag("projects");
   } catch (error) {
     console.error("Project deletion failed:", error);
-    
+
     if (error instanceof APIError) {
       if (error.status === 404) {
         toast.error("Project not found");
@@ -319,12 +207,12 @@ export const logout = async (router: AppRouterInstance): Promise<void> => {
       method: "POST",
       json: false,
     });
-    
+
     toast.success("Logged out successfully");
     router.push("/signin");
   } catch (error) {
     console.error("Logout failed:", error);
-    
+
     // Even if logout fails on server, redirect user anyway
     toast.warning("Logged out (with warnings)");
     router.push("/signin");
@@ -350,5 +238,25 @@ export const fetchData = async <T = unknown>(
   } catch (error) {
     console.error(`Failed to fetch data from ${endpoint}:`, error);
     throw error;
+  }
+};
+
+export const getUserStats = async <T = unknown>(userId: string) => {
+  try {
+    return await fetcher<never, T>({
+      url: `/api/users/${userId}/stats`,
+      method: "GET",
+      json: true,
+    });
+  } catch (error) {
+    console.error("Error fetching user stats:", error);
+    return {
+      totalProjects: 0,
+      totalTasks: 0,
+      completedTasks: 0,
+      pendingTasks: 0,
+      completionRate: 0,
+      recentActivity: [],
+    };
   }
 };

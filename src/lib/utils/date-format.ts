@@ -5,3 +5,12 @@ export const formatDate = (date: Date) =>
     month: "short",
     day: "numeric",
   });
+
+export const formatJoinDate = (date?: Date) => {
+  if (!date) return "Unknown";
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+};
